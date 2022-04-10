@@ -1,0 +1,42 @@
+@page "/"
+
+<h3>Welcome to Pizza Restaurant</h3>
+
+@foreach (var pizza in _state.Menu.Pizzas)
+{
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            @pizza.Name
+        </div>
+        <div class="col text-right">
+            @pizza.Price.ToString("0.00")
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <img src="images/@(pizza.Spiciness.ToString().ToLower()).jpg" alt="@pizza.Spiciness" style="max-height: 32px;"/>
+        </div>
+        <div class="col">
+            <button class="btn btn-success pl-4 pr-4" @onclick="@(() => AddToBasket(pizza))">Add</button>
+        </div>
+    </div>
+}
+
+
+@code {
+    private readonly State _state = new State();
+
+    protected override void OnInitialized()
+    {
+        _state.Menu.AddPizza(new Pizza
+        { Id = 1, Name = "Pepperoni", Price = 8.99M, Spiciness = SpicinessTypes.Spicy });
+        _state.Menu.AddPizza(new Pizza
+        { Id = 2, Name = "Margarita", Price = 7.99M, Spiciness = SpicinessTypes.None });
+        _state.Menu.AddPizza(new Pizza
+        { Id = 3, Name = "Diabolo", Price = 9.99M, Spiciness = SpicinessTypes.Hot });
+    }
+
+    private void AddToBasket(Pizza pizza)
+    {
+        
+    }
+}

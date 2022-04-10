@@ -1,0 +1,90 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @_currentCount</p>
+<div class="row g-3 mb-3">
+    <div class="col-4">
+        <label>Increment with bind</label>
+        <input type="number" class="form-control" @bind="@_increment" @bind:event="oninput" @onkeypress="KeyPressHandler" @onkeypress:preventDefault/>
+    </div>
+    <div class="col-8"></div>
+    <div class="col-4">
+        <label>Increment with event</label>
+        <input type="number" class="form-control" value="@_increment" @onchange="@(e => _increment = int.Parse((string)e.Value))"/>
+    </div>
+    <div class="col-8"></div>
+    <div class="col-4">
+        <button class="btn btn-primary" @onclick="IncrementCount">Manual increment</button>
+        <button class="btn btn-secondary" @onclick="AutoIncrement">Auto increment</button>
+    </div>
+</div>
+
+<div style="width: 200px; height: 200px; background-color: yellow; margin-bottom: 1rem;" @onmousemove="OuterMouseMoveHandler">
+    @_outerMousePosition
+    <div style="width: 100px; height: 100px; background-color: green;" @onmousemove="InnerMouseMoveHandler" @onmousemove:stopPropagation>
+        @_innerMousePosition
+    </div>
+</div>
+
+<div class="mb-3">
+    <input class="form-control" @bind="@_currentDate" @bind:format="dd.MM.yyyy" />
+</div>
+
+
+@code {
+    private int _currentCount = 0;
+    private int _increment = 1;
+    private DateTime _currentDate = DateTime.Now;
+    
+    private string _outerMousePosition = "no set yet";
+    private string _innerMousePosition = "no set yet";
+
+
+    
+    
+    private void IncrementCount(MouseEventArgs args)
+    {
+        _currentCount += args.MetaKey ? -_increment : _increment;
+        Console.WriteLine("works");
+    }
+
+    private void KeyPressHandler(KeyboardEventArgs e)
+    {
+        if (e.Key == "+")
+        {
+            _increment++;
+        }
+        else if (e.Key == "-")
+        {
+            _increment--;
+        }
+    }
+
+    private void OuterMouseMoveHandler(MouseEventArgs e)
+    {
+        _outerMousePosition = $"{e.ClientX}x{e.ClientY}";
+    }
+
+    private void InnerMouseMoveHandler(MouseEventArgs e)
+    {
+        _innerMousePosition = $"{e.ClientX}x{e.ClientY}";
+    }
+
+    private void AutoIncrement()
+    {
+        new Timer(
+            callback: (_) =>
+            {
+                var args = new MouseEventArgs();
+                IncrementCount(args);
+                StateHasChanged();
+            },
+            state: null,
+            dueTime: TimeSpan.FromSeconds(1),
+            period: TimeSpan.FromSeconds(1));
+        
+    }
+}
