@@ -7,3 +7,28 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<button class="btn btn-success" @onclick="ToggleAlert">Toggle alert</button>
+
+<TimerComponent TimeInSeconds="5" Tick="ToggleAlert" />
+<TimerComponent TimeInSeconds="7" Tick="@(() => _alert!.DismissAlert())" />
+
+<Alert @bind-Show="@ShowAlert" @ref="_alert">
+    Blazor is cool
+</Alert>
+
+<p>
+    _showAlert is @ShowAlert
+</p>
+
+
+<GrandMother>
+    <GrandChild />
+    <Alert Show="true">
+        <GrandChild />
+    </Alert>
+</GrandMother>
+
+
+
+

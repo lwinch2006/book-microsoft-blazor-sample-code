@@ -1,0 +1,13 @@
+@if (Show)
+{
+    <div class="alert alert-danger alert-dismissible mt-4" role="alert">
+        @ChildContent
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="DismissAlert">
+        </button>
+    </div>
+}
+
+<p>
+    Show property is @Show
+</p>
+

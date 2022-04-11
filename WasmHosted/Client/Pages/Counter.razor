@@ -13,7 +13,7 @@
     <div class="col-8"></div>
     <div class="col-4">
         <label>Increment with event</label>
-        <input type="number" class="form-control" value="@_increment" @onchange="@(e => _increment = int.Parse((string)e.Value))"/>
+        <input type="number" class="form-control" value="@_increment" @onchange="@(e => _increment = int.Parse((string)e.Value!))"/>
     </div>
     <div class="col-8"></div>
     <div class="col-4">

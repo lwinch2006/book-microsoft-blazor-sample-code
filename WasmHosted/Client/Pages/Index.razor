@@ -21,6 +21,86 @@
     </div>
 }
 
+@if (_state.Basket.Orders.Any())
+{
+    <h1>Your current order</h1>
+
+    @foreach (var (pizza, pos) in _state.Basket.Orders.Select((id, pos) => (_state.Menu.GetPizza(id), pos)))
+    {
+        <div class="row mb-3 align-items-center">
+            <div class="col">
+                @pizza.Name
+            </div>
+            <div class="col text-right">
+                @pizza.Price.ToString("0.00");
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                <button class="btn btn-danger" @onclick="@((_) => RemoveFromBasket(pizza))">Remove</button>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <hr/>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            Total:
+        </div>
+        <div class="col text-right font-weight-bold">
+            @_state.TotalPrice.ToString("0.00");
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+}
+
+<h1>Please enter your details below</h1>
+
+<EditForm Model="@_state.Basket.Customer" OnValidSubmit="Checkout">
+    
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <fieldset>
+        <div class="row mb-3">
+            <label for="Name" class="col-2">Name</label>
+            <div class="col-6">
+                <InputText id="Name" class="form-control" @bind-Value="@_state.Basket.Customer.Name"></InputText>
+                <ValidationMessage For="@(() => _state.Basket.Customer.Name)" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Street" class="col-2">Street</label>
+            <div class="col-6">
+                <InputText id="Street" class="form-control" @bind-Value="@_state.Basket.Customer.Street"></InputText>
+                <ValidationMessage For="@(() => _state.Basket.Customer.Street)" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="City" class="col-2">City</label>
+            <div class="col-6">
+                <InputText id="City" class="form-control" @bind-Value="@_state.Basket.Customer.City"></InputText>
+                <ValidationMessage For="@(() => _state.Basket.Customer.City)" />
+            </div>
+        </div>
+        <button class="btn btn-success mb-3">Checkout</button>
+    </fieldset>
+</EditForm>
+
+@if (DebuggerExtensions.IsDebug())
+{
+    @_state.ToJson()
+}
 
 @code {
     private readonly State _state = new State();
@@ -37,6 +117,36 @@
 
     private void AddToBasket(Pizza pizza)
     {
-        
+        _state.Basket.Orders.Add(pizza.Id);
     }
+
+    private void RemoveFromBasket(Pizza pizza)
+    {
+        _state.Basket.Orders.Remove(pizza.Id);
+    }
+
+    private void Checkout()
+    {
+        var messageTemplate = "Order for {0} pizza(s) ({1}) for {2} at {3} {4} received";
+
+        var pizzaNumber = _state.Basket.Orders.Count;
+        var customerName = _state.Basket.Customer.Name;
+        var street = _state.Basket.Customer.Street;
+        var city = _state.Basket.Customer.City;
+
+        var pizzaSpec = string.Empty;
+
+        _state.Basket.Orders.GroupBy(t => t).Select(t =>
+        {
+            pizzaSpec += $"{t.Count()} x {_state.Menu.GetPizza(t.Key)!.Name}, ";
+            return t;
+        }).ToList();
+
+        pizzaSpec.Trim(' ').Trim(',');
+
+        var message = string.Format(messageTemplate, pizzaNumber, pizzaSpec, customerName, street, city);
+
+        Console.WriteLine(message);
+    }
+
 }
