@@ -1,0 +1,12 @@
+@typeparam TItem
+
+
+@* 12.02.2022 as of this date Wig Pig syntax is not supported in Rider yet, shows error *@
+
+@ListTemplate!(
+    @<span>
+        @foreach (var item in Items)
+        {
+            @ItemTemplate!(item)
+        }
+    </span>)

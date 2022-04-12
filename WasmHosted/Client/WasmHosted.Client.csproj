@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ComponentsLibrary\ComponentsLibrary.csproj" />
     <ProjectReference Include="..\Shared\WasmHosted.Shared.csproj" />
   </ItemGroup>
 
