@@ -1,0 +1,15 @@
+@page "/Lifecycle"
+<h3>Lifecycle</h3>
+
+<LifecycleComponent Counter="@_counter" />
+
+<button type="button" class="btn btn-success" @onclick="Increment">Increment</button>
+
+@code {
+
+    private int _counter = 10;
+    private void Increment()
+    {
+        _counter++;
+    }
+}

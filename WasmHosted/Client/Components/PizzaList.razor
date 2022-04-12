@@ -1,0 +1,14 @@
+
+@if (!Pizzas.Any())
+{
+    <div>Loading...</div>
+}
+else
+{
+    <h4>@Title</h4>
+
+    @foreach (var pizza in Pizzas)
+    {
+        <PizzaItem Pizza="@pizza" ButtonTitle="@ButtonTitle" ButtonClass="@ButtonClass" Selected="@Selected" />
+    }
+}

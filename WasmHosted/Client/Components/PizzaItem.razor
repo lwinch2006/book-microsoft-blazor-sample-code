@@ -1,0 +1,15 @@
+<div class="row mb-3 align-items-center">
+    <div class="col">
+        @Pizza.Name
+    </div>
+    <div class="col text-right">
+        @(Pizza.Price.ToString("0.00"))
+    </div>
+    <div class="col"></div>
+    <div class="col">
+        <img src="@GetSpicinessImageUrl(Pizza.Spiciness)" alt="@Pizza.Spiciness" style="max-height: 32px;" />
+    </div>
+    <div class="col">
+        <button class="@ButtonClass" @onclick="@(() => Selected.InvokeAsync(Pizza))">@ButtonTitle</button>
+    </div>
+</div>

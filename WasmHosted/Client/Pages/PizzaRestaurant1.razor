@@ -1,4 +1,4 @@
-@page "/"
+@page "/pizzarestaurant1"
 
 <h3>Welcome to Pizza Restaurant</h3>
 
@@ -67,30 +67,30 @@
 <h1>Please enter your details below</h1>
 
 <EditForm Model="@_state.Basket.Customer" OnValidSubmit="Checkout">
-    
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
     <fieldset>
         <div class="row mb-3">
             <label for="Name" class="col-2">Name</label>
             <div class="col-6">
                 <InputText id="Name" class="form-control" @bind-Value="@_state.Basket.Customer.Name"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.Name)" />
+                <ValidationMessage For="@(() => _state.Basket.Customer.Name)"/>
             </div>
         </div>
         <div class="row mb-3">
             <label for="Street" class="col-2">Street</label>
             <div class="col-6">
                 <InputText id="Street" class="form-control" @bind-Value="@_state.Basket.Customer.Street"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.Street)" />
+                <ValidationMessage For="@(() => _state.Basket.Customer.Street)"/>
             </div>
         </div>
         <div class="row mb-3">
             <label for="City" class="col-2">City</label>
             <div class="col-6">
                 <InputText id="City" class="form-control" @bind-Value="@_state.Basket.Customer.City"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.City)" />
+                <ValidationMessage For="@(() => _state.Basket.Customer.City)"/>
             </div>
         </div>
         <button class="btn btn-success mb-3">Checkout</button>

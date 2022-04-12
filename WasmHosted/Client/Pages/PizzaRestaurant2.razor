@@ -1,0 +1,73 @@
+@page "/pizzarestaurant2"
+
+<h3>Welcome to Pizza Restaurant</h3>
+
+<PizzaList
+    Title="Our selection of pizzas"
+    Pizzas="@_state.Menu.Pizzas"
+    ButtonTitle="Add"
+    ButtonClass="btn btn-success"
+    Selected="@AddToBasket"/>
+
+<ShoppingBasket
+    OrderedPizzas="@_state.Basket.Orders.Select(t => _state.Menu.GetPizza(t))"
+    Selected="RemoveFromBasket"/>
+
+<CustomerEntry
+    Title="Please enter your details below"
+    @bind-Customer="@_state.Basket.Customer"
+    ValidSubmit="Checkout" />
+
+@if (DebuggerExtensions.IsDebug())
+{
+    @_state.ToJson()
+}
+
+@code {
+    private readonly State _state = new State();
+
+    protected override void OnInitialized()
+    {
+        _state.Menu.AddPizza(new Pizza
+        { Id = 1, Name = "Pepperoni", Price = 8.99M, Spiciness = SpicinessTypes.Spicy });
+        _state.Menu.AddPizza(new Pizza
+        { Id = 2, Name = "Margarita", Price = 7.99M, Spiciness = SpicinessTypes.None });
+        _state.Menu.AddPizza(new Pizza
+        { Id = 3, Name = "Diabolo", Price = 9.99M, Spiciness = SpicinessTypes.Hot });
+    }
+
+    private void AddToBasket(Pizza pizza)
+    {
+        _state.Basket.Orders.Add(pizza.Id);
+    }
+
+    private void RemoveFromBasket(Pizza pizza)
+    {
+        _state.Basket.Orders.Remove(pizza.Id);
+    }
+
+    private void Checkout()
+    {
+        var messageTemplate = "Order for {0} pizza(s) ({1}) for {2} at {3} {4} received";
+
+        var pizzaNumber = _state.Basket.Orders.Count;
+        var customerName = _state.Basket.Customer.Name;
+        var street = _state.Basket.Customer.Street;
+        var city = _state.Basket.Customer.City;
+
+        var pizzaSpec = string.Empty;
+
+        _state.Basket.Orders.GroupBy(t => t).Select(t =>
+        {
+            pizzaSpec += $"{t.Count()} x {_state.Menu.GetPizza(t.Key)!.Name}, ";
+            return t;
+        }).ToList();
+
+        pizzaSpec.Trim(' ').Trim(',');
+
+        var message = string.Format(messageTemplate, pizzaNumber, pizzaSpec, customerName, street, city);
+
+        Console.WriteLine(message);
+    }
+
+}
