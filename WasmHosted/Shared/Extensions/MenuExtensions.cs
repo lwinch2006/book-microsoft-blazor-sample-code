@@ -1,16 +1,17 @@
 using WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
 namespace WasmHosted.Shared.Extensions;
 
 public static class MenuExtensions
 {
-    public static void AddPizza(this Menu menu, Pizza pizza)
+    public static void AddPizza(this MenuVm menuVm, PizzaVm pizzaVm)
     {
-        menu.Pizzas.Add(pizza);
+        menuVm.Pizzas.Add(pizzaVm);
     }
 
-    public static Pizza? GetPizza(this Menu menu, int id)
+    public static PizzaVm? GetPizza(this MenuVm menuVm, int id)
     {
-        return menu.Pizzas.SingleOrDefault(t => t.Id == id);
+        return menuVm.Pizzas.SingleOrDefault(t => t.Id == id);
     }
 }

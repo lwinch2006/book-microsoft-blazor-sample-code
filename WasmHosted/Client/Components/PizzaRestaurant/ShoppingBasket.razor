@@ -1,0 +1,35 @@
+@if (OrderedPizzas.Any())
+{
+    <HeaderBodyFooterComponent>
+        <Body>
+        <PizzaList
+            Title="Your current order"
+            Pizzas="@OrderedPizzas"
+            ButtonTitle="Remove"
+            ButtonClass="btn btn-danger"
+            Selected="@Selected"/>
+        </Body>
+        <Footer>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <hr/>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+
+            <div class="row">
+                <div class="col"></div>
+                <div class="col">
+                    Total:
+                </div>
+                <div class="col text-right font-weight-bold">
+                    @_totalPrice.ToString("0.00");
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </Footer>
+    </HeaderBodyFooterComponent>
+}

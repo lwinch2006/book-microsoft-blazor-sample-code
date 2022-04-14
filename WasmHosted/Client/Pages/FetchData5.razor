@@ -1,0 +1,74 @@
+﻿@page "/fetchdata5"
+@using System.Diagnostics
+@inject HttpClient Http
+
+<PageTitle>Fetching virtual paged measurements</PageTitle>
+
+<h1>Fetching virtual paged measurements</h1>
+
+    <p>
+        @_performanceMessage
+    </p>
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Guid</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Avg</th>
+        </tr>
+        </thead>
+        <tbody>
+        <Virtualize ItemsProvider="@LoadMeasurement"
+                    ItemSize="25"
+                    Context="measurement" 
+                    TItem="MeasurementVm">
+            <ItemContent>
+                <tr>
+                    <td>@measurement.Guid</td>
+                    <td>@measurement.Min</td>
+                    <td>@measurement.Max</td>
+                    <td>@measurement.Avg</td>
+                </tr>
+            </ItemContent>
+            <Placeholder>
+                <tr>
+                    <td colspan="4">Loading...</td>
+                </tr>
+            </Placeholder>
+        </Virtualize>
+        </tbody>
+    </table>
+
+
+@code {
+
+    private readonly Stopwatch _timer = new();
+    private string _performanceMessage = string.Empty;
+    private bool _isPerformanceMessageUpdated = false;
+    protected override void OnInitialized()
+    {
+        _timer.Start();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _timer.Stop();
+        _performanceMessage = $"Full rendering took {_timer.ElapsedMilliseconds} ms";
+
+        if (!_isPerformanceMessageUpdated)
+        {
+            _isPerformanceMessageUpdated = true;
+            StateHasChanged();
+        }
+    }
+
+    private async ValueTask<ItemsProviderResult<MeasurementVm>> LoadMeasurement(ItemsProviderRequest request)
+    {
+        Console.WriteLine("Requested {0} measurements starting from {1}", request.Count, request.StartIndex);
+        var apiResponse = (await Http.GetFromJsonAsync<GetMeasurementsPageVm>($"Measurements/PagedResults?from={request.StartIndex}&count={request.Count}"))!;
+        var providerResult = new ItemsProviderResult<MeasurementVm>(apiResponse.Items, apiResponse.MaxCount);
+        return providerResult;
+    }
+}

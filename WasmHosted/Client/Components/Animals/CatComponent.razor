@@ -1,0 +1,26 @@
+@inherits AnimalComponent
+
+<EditForm Model="@Instance" OnValidSubmit="@ValidSubmit">
+
+    <DataAnnotationsValidator/>
+
+    <fieldset>
+        <div class="row mb-3">
+            <label for="Name" class="col-2">Name</label>
+            <div class="col-6">
+                <InputText id="Name" class="form-control" @bind-Value="@Instance.Name"></InputText>
+                <ValidationMessage For="@(() => Instance!.Name)"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="scratches" class="col-2">Scratches</label>
+            <div class="col-6">
+                <div class="form-check">
+                    <InputCheckbox id="scratches" class="form-check-input" @bind-Value="@Instance.Scratches"></InputCheckbox>
+                    <ValidationMessage For="@(() => Instance!.Scratches)"/>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success mb-3">Save</button>
+    </fieldset>
+</EditForm>

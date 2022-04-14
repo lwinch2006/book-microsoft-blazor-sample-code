@@ -1,4 +1,4 @@
-namespace WasmHosted.Shared.ViewModels;
+namespace WasmHosted.Shared.Models;
 
 public enum SpicinessTypes
 {

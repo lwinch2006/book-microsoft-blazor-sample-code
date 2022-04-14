@@ -1,8 +1,10 @@
 @page "/pizzarestaurant1"
+@using WasmHosted.Shared.Models
+@using WasmHosted.Shared.ViewModels.PizzaRestaurant
 
 <h3>Welcome to Pizza Restaurant</h3>
 
-@foreach (var pizza in _state.Menu.Pizzas)
+@foreach (var pizza in _stateVm.MenuVm.Pizzas)
 {
     <div class="row mb-3 align-items-center">
         <div class="col">
@@ -21,11 +23,11 @@
     </div>
 }
 
-@if (_state.Basket.Orders.Any())
+@if (_stateVm.BasketVm.Pizzas.Any())
 {
     <h1>Your current order</h1>
 
-    @foreach (var (pizza, pos) in _state.Basket.Orders.Select((id, pos) => (_state.Menu.GetPizza(id), pos)))
+    @foreach (var (pizza, pos) in _stateVm.BasketVm.Pizzas.Select((id, pos) => (_stateVm.MenuVm.GetPizza(id), pos)))
     {
         <div class="row mb-3 align-items-center">
             <div class="col">
@@ -57,7 +59,7 @@
             Total:
         </div>
         <div class="col text-right font-weight-bold">
-            @_state.TotalPrice.ToString("0.00");
+            @_stateVm.TotalPrice.ToString("0.00");
         </div>
         <div class="col"></div>
         <div class="col"></div>
@@ -66,7 +68,7 @@
 
 <h1>Please enter your details below</h1>
 
-<EditForm Model="@_state.Basket.Customer" OnValidSubmit="Checkout">
+<EditForm Model="@_stateVm.BasketVm.Customer" OnValidSubmit="Checkout">
 
     <DataAnnotationsValidator/>
     <ValidationSummary/>
@@ -75,22 +77,22 @@
         <div class="row mb-3">
             <label for="Name" class="col-2">Name</label>
             <div class="col-6">
-                <InputText id="Name" class="form-control" @bind-Value="@_state.Basket.Customer.Name"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.Name)"/>
+                <InputText id="Name" class="form-control" @bind-Value="@_stateVm.BasketVm.Customer.Name"></InputText>
+                <ValidationMessage For="@(() => _stateVm.BasketVm.Customer.Name)"/>
             </div>
         </div>
         <div class="row mb-3">
             <label for="Street" class="col-2">Street</label>
             <div class="col-6">
-                <InputText id="Street" class="form-control" @bind-Value="@_state.Basket.Customer.Street"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.Street)"/>
+                <InputText id="Street" class="form-control" @bind-Value="@_stateVm.BasketVm.Customer.Street"></InputText>
+                <ValidationMessage For="@(() => _stateVm.BasketVm.Customer.Street)"/>
             </div>
         </div>
         <div class="row mb-3">
             <label for="City" class="col-2">City</label>
             <div class="col-6">
-                <InputText id="City" class="form-control" @bind-Value="@_state.Basket.Customer.City"></InputText>
-                <ValidationMessage For="@(() => _state.Basket.Customer.City)"/>
+                <InputText id="City" class="form-control" @bind-Value="@_stateVm.BasketVm.Customer.City"></InputText>
+                <ValidationMessage For="@(() => _stateVm.BasketVm.Customer.City)"/>
             </div>
         </div>
         <button class="btn btn-success mb-3">Checkout</button>
@@ -99,46 +101,46 @@
 
 @if (DebuggerExtensions.IsDebug())
 {
-    @_state.ToJson()
+    @_stateVm.ToJson()
 }
 
 @code {
-    private readonly State _state = new State();
+    private readonly StateVm _stateVm = new StateVm();
 
     protected override void OnInitialized()
     {
-        _state.Menu.AddPizza(new Pizza
+        _stateVm.MenuVm.AddPizza(new PizzaVm
         { Id = 1, Name = "Pepperoni", Price = 8.99M, Spiciness = SpicinessTypes.Spicy });
-        _state.Menu.AddPizza(new Pizza
+        _stateVm.MenuVm.AddPizza(new PizzaVm
         { Id = 2, Name = "Margarita", Price = 7.99M, Spiciness = SpicinessTypes.None });
-        _state.Menu.AddPizza(new Pizza
+        _stateVm.MenuVm.AddPizza(new PizzaVm
         { Id = 3, Name = "Diabolo", Price = 9.99M, Spiciness = SpicinessTypes.Hot });
     }
 
-    private void AddToBasket(Pizza pizza)
+    private void AddToBasket(PizzaVm pizzaVm)
     {
-        _state.Basket.Orders.Add(pizza.Id);
+        _stateVm.BasketVm.Pizzas.Add(pizzaVm.Id);
     }
 
-    private void RemoveFromBasket(Pizza pizza)
+    private void RemoveFromBasket(PizzaVm pizzaVm)
     {
-        _state.Basket.Orders.Remove(pizza.Id);
+        _stateVm.BasketVm.Pizzas.Remove(pizzaVm.Id);
     }
 
     private void Checkout()
     {
         var messageTemplate = "Order for {0} pizza(s) ({1}) for {2} at {3} {4} received";
 
-        var pizzaNumber = _state.Basket.Orders.Count;
-        var customerName = _state.Basket.Customer.Name;
-        var street = _state.Basket.Customer.Street;
-        var city = _state.Basket.Customer.City;
+        var pizzaNumber = _stateVm.BasketVm.Pizzas.Count;
+        var customerName = _stateVm.BasketVm.Customer.Name;
+        var street = _stateVm.BasketVm.Customer.Street;
+        var city = _stateVm.BasketVm.Customer.City;
 
         var pizzaSpec = string.Empty;
 
-        _state.Basket.Orders.GroupBy(t => t).Select(t =>
+        _stateVm.BasketVm.Pizzas.GroupBy(t => t).Select(t =>
         {
-            pizzaSpec += $"{t.Count()} x {_state.Menu.GetPizza(t.Key)!.Name}, ";
+            pizzaSpec += $"{t.Count()} x {_stateVm.MenuVm.GetPizza(t.Key)!.Name}, ";
             return t;
         }).ToList();
 

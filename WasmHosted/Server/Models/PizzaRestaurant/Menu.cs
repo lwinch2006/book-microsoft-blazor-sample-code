@@ -1,4 +1,4 @@
-namespace WasmHosted.Shared.ViewModels;
+namespace WasmHosted.Server.Models.PizzaRestaurant;
 
 public class Menu
 {

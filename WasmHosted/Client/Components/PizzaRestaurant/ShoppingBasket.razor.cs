@@ -1,17 +1,18 @@
 using Microsoft.AspNetCore.Components;
 using WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
-namespace WasmHosted.Client.Components;
+namespace WasmHosted.Client.Components.PizzaRestaurant;
 
 public partial class ShoppingBasket
 {
     private decimal _totalPrice;
     
     [Parameter]
-    public IEnumerable<Pizza> OrderedPizzas { get; set; } = Enumerable.Empty<Pizza>();
+    public IEnumerable<PizzaVm> OrderedPizzas { get; set; } = Enumerable.Empty<PizzaVm>();
 
     [Parameter]
-    public EventCallback<Pizza> Selected { get; set; }
+    public EventCallback<PizzaVm> Selected { get; set; }
 
     protected override void OnParametersSet()
     {

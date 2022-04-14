@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WasmHosted.Shared.ViewModels;
+namespace WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
-public class Customer
+public class CustomerVm
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [Required (ErrorMessage = "Please provide a name")]
     public string? Name { get; set; }

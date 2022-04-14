@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Components;
 using WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
-namespace WasmHosted.Client.Components;
+namespace WasmHosted.Client.Components.PizzaRestaurant;
 
 public partial class PizzaList
 {
     [Parameter]
     public string? Title { get; set; }
 
-    [Parameter] public IEnumerable<Pizza> Pizzas { get; set; } = Enumerable.Empty<Pizza>();
+    [Parameter] public IEnumerable<PizzaVm> Pizzas { get; set; } = Enumerable.Empty<PizzaVm>();
     
     [Parameter]
     public string? ButtonClass { get; set; }
@@ -17,5 +18,5 @@ public partial class PizzaList
     public string? ButtonTitle { get; set; }
     
     [Parameter]
-    public EventCallback<Pizza> Selected { get; set; }
+    public EventCallback<PizzaVm> Selected { get; set; }
 }

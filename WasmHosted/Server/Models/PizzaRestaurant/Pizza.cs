@@ -1,4 +1,6 @@
-namespace WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.Models;
+
+namespace WasmHosted.Server.Models.PizzaRestaurant;
 
 public class Pizza
 {

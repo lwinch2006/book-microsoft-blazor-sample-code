@@ -1,0 +1,63 @@
+﻿@page "/fetchdata4"
+@using System.Diagnostics
+@inject HttpClient Http
+
+<PageTitle>Fetching virtual measurements</PageTitle>
+
+<h1>Fetching virtual measurements</h1>
+
+@if (!_measurements.Any())
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <p>
+        @_performanceMessage
+    </p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Guid</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Avg</th>
+        </tr>
+        </thead>
+        <tbody>
+        <Virtualize Items="@_measurements" Context="measurement" TItem="MeasurementVm">
+            <ItemContent>
+                <tr>
+                    <td>@measurement.Guid</td>
+                    <td>@measurement.Min</td>
+                    <td>@measurement.Max</td>
+                    <td>@measurement.Avg</td>
+                </tr>
+            </ItemContent>
+        </Virtualize>
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private readonly Stopwatch _timer = new();
+    private string _performanceMessage = string.Empty;
+    private ICollection<MeasurementVm> _measurements = Array.Empty<MeasurementVm>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _timer.Start();
+        _measurements = (await Http.GetFromJsonAsync<ICollection<MeasurementVm>>("Measurements"))!;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _timer.Stop();
+        _performanceMessage = $"Full rendering took {_timer.ElapsedMilliseconds} ms";
+    }
+
+}

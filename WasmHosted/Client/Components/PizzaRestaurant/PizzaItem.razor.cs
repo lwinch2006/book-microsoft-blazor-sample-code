@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Components;
+using WasmHosted.Shared.Models;
 using WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
-namespace WasmHosted.Client.Components;
+namespace WasmHosted.Client.Components.PizzaRestaurant;
 
 public partial class PizzaItem
 {
     [Parameter]
-    public Pizza? Pizza { get; set; }
+    public PizzaVm? Pizza { get; set; }
     
     [Parameter]
     public string? ButtonTitle { get; set; }
@@ -15,7 +17,7 @@ public partial class PizzaItem
     public string? ButtonClass { get; set; }
     
     [Parameter]
-    public EventCallback<Pizza> Selected { get; set; }
+    public EventCallback<PizzaVm> Selected { get; set; }
 
     private string GetSpicinessImageUrl(SpicinessTypes spicinessTypes)
     {

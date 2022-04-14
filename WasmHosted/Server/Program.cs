@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using WasmHosted.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

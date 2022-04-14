@@ -3,7 +3,7 @@
 <EditForm Model="@Customer" OnValidSubmit="@ValidSubmit">
 
     <DataAnnotationsValidator/>
-    <ValidationSummary/>
+    @* <ValidationSummary/> *@
 
     <InputWatcher FieldChanged="FieldChanged" @ref="@_inputWatcher" />
     

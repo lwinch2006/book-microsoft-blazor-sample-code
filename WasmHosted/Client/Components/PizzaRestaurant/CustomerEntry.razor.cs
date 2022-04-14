@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using WasmHosted.Shared.ViewModels;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
-namespace WasmHosted.Client.Components;
+namespace WasmHosted.Client.Components.PizzaRestaurant;
 
 public partial class CustomerEntry
 {
@@ -11,13 +12,13 @@ public partial class CustomerEntry
     public string? Title { get; set; }
     
     [Parameter]
-    public Customer? Customer { get; set; }
+    public CustomerVm? Customer { get; set; }
     
     [Parameter]
     public EventCallback ValidSubmit { get; set; }
     
     [Parameter]
-    public EventCallback<Customer> CustomerChanged { get; set; }
+    public EventCallback<CustomerVm> CustomerChanged { get; set; }
 
     private void FieldChanged(string fieldName)
     {

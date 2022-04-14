@@ -1,0 +1,23 @@
+@using WasmHosted.Shared.Models
+
+<div class="row">
+    <div class="col-2">
+        Please select:
+    </div>
+    <div class="col-6">
+        <select class="form-select"
+                @onchange="@((ChangeEventArgs e) => AnimalSelected(e.Value))">
+            @foreach (var animalType in Enum.GetValues(typeof(AnimalTypes)))
+            {
+                <option value="@animalType">@animalType.ToString()</option>
+            }
+        </select>
+    </div>
+</div>
+
+@if (_metadata != null)
+{
+    <div class="mt-2">
+        <DynamicComponent Type="@_metadata.Type" Parameters="@_metadata.Parameters"/>
+    </div>
+}
