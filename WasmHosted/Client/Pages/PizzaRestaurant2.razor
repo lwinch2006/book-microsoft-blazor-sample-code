@@ -7,24 +7,34 @@
 
 <h3>Welcome to Pizza Restaurant</h3>
 
-<PizzaList
-    Title="Our selection of pizzas"
-    Pizzas="@_stateVm.MenuVm.Pizzas"
-    ButtonTitle="Add"
-    ButtonClass="btn btn-success"
-    Selected="@AddToBasket"/>
+@if (!_stateVm.MenuVm.Pizzas.Any())
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    <PizzaList
+        Title="Our selection of pizzas"
+        Pizzas="@_stateVm.MenuVm.Pizzas"
+        ButtonTitle="Add"
+        ButtonClass="btn btn-success"
+        Selected="@AddToBasket"/>
+    
+    <ShoppingBasket
+        OrderedPizzas="@_stateVm.BasketVm.Pizzas.Select(t => _stateVm.MenuVm.GetPizza(t))"
+        Selected="RemoveFromBasket"/>
 
-<ShoppingBasket
-    OrderedPizzas="@_stateVm.BasketVm.Pizzas.Select(t => _stateVm.MenuVm.GetPizza(t))"
-    Selected="RemoveFromBasket"/>
-
-<CustomerEntry
-    Title="Please enter your details below"
-    @bind-Customer="@_stateVm.BasketVm.Customer"
-    ValidSubmit="Checkout" />
+    <CustomerEntry
+        Title="Please enter your details below"
+        @bind-Customer="@_stateVm.BasketVm.Customer"
+        ValidSubmit="Checkout" />
+}
 
 @if (DebuggerExtensions.IsDebug())
 {
+    <br />
     @_stateVm.ToJson()
 }
 

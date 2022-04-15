@@ -1,0 +1,19 @@
+@using ComponentsLibrary
+@inherits TestContext
+
+
+@code {
+    
+    [Fact]
+    public void Test_InitialSetup_ShoulsPass()
+    {
+        int currentCount = 100;
+        var component = Render(@<TwoWayCounter @bind-CurrentCount="currentCount" Increment="50"/>);
+        component.Find("button").Click();
+        component.Find("p").MarkupMatches("<p>Current count: 150</p>");
+        Assert.Equal(150, currentCount);
+    }
+    
+}
+
+

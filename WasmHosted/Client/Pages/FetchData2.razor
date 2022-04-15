@@ -1,6 +1,8 @@
 ﻿@page "/fetchdata2"
+@layout NestedLayout
 @using WasmHosted.Shared
-@inject HttpClient Http
+@using WasmHosted.Client.Services
+@inject IApiClient _apiClient
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -65,7 +67,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await _apiClient.GetWeatherForecast();
     }
 
     private readonly RenderFragment<WeatherForecast> _forecastTemplate = (forecast) => @<span>@forecast.Summary</span>;

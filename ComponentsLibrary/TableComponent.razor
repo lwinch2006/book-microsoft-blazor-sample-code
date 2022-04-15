@@ -1,22 +1,29 @@
-@typeparam TItem where TItem: class
+@typeparam TItem        where TItem: class
 
-<table class="table">
-    <thead>
-    <tr>
-        @Header
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Items)
-    {
-        <ErrorBoundary>
-            <tr>@Row!(item)</tr>
-        </ErrorBoundary>
-    }
-    </tbody>
-    <tfoot>
-    <tr>
-        @Footer
-    </tr>
-    </tfoot>
-</table>
+@if (!Items.Any())
+{
+    <p> Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            @Header
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Items)
+        {
+            <ErrorBoundary>
+                <tr>@Row!(item)</tr>
+            </ErrorBoundary>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            @Footer
+        </tr>
+        </tfoot>
+    </table>
+}

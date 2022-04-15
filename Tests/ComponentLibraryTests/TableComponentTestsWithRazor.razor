@@ -1,0 +1,36 @@
+@using ComponentsLibrary
+@inherits TestContext
+
+@code {
+
+    [Fact]
+    public void Test_ItemsNotEmpty_ShouldPass()
+    {
+        var items = new[] { "Hello", "World", "!!!" };
+
+        var expectedRowsContent = new[]
+        {
+            "<span>Hello</span>",
+            "<span>World</span>",
+            "<span>!!!</span>",
+        };
+        
+        var component = Render(
+            @<TableComponent Items="items" Context="text" TItem="string">
+                <Row>
+                    <span>@text</span>
+                </Row>
+            </TableComponent>);
+
+        component.WaitForState(() => component.FindAll("span").Any());
+        
+        var rowsContent = component.FindAll("span");
+        
+        Assert.Equal(3, rowsContent.Count);
+
+        foreach (var rowContent in rowsContent)
+        {
+            Assert.Contains(expectedRowsContent, t => rowContent.ToMarkup().Contains(t));
+        }
+    }
+}

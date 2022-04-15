@@ -1,0 +1,34 @@
+@inherits TestContext
+@using WasmHosted.Client.Components
+
+@code {
+
+    [Fact]
+    public void Test_Alert_AddingChildContent_ShowTrue_Visible_ShouldPass()
+    {
+        var component = Render(
+            @<Alert Show="true">
+                <span>
+                    Test
+                </span>
+            </Alert>);
+        
+        component.MarkupMatches(@"
+    <div class:ignore role=""alert"">
+            <span>Test</span>
+            <button type=""button"" class=""btn-close"" data-bs-dismiss=""alert"" aria-label=""Close"" >
+            </button>
+            </div>
+
+            <p>
+            Show property is True
+            </p>
+
+        ");
+        
+    }
+    
+    
+    
+    
+}

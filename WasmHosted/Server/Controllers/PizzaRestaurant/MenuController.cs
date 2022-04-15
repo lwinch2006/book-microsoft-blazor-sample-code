@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WasmHosted.Server.Services.PizzaRestaurant;
+using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
 namespace WasmHosted.Server.Controllers.PizzaRestaurant;
 
@@ -15,10 +16,12 @@ public class MenuController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult> Get()
+    public async Task<ActionResult<MenuVm>> Get()
     {
+        await Task.Delay(1000);
+        
         var menu = await _menuService.Get();
         var menuVm = MenuMapper.Map(menu);
-        return await Task.FromResult(Ok(menuVm));
+        return await Task.FromResult(menuVm);
     }
 }
