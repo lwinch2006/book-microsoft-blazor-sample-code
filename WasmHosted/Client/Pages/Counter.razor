@@ -56,7 +56,7 @@
 
 
 @code {
-    private int _currentCount = 0;
+    private int? _currentCountToOverride;
     private int _increment = 1;
     private DateTime _currentDate = DateTime.Now;
     
@@ -64,27 +64,16 @@
     private string _innerMousePosition = "no set yet";
 
     private ElementReference? _elementReference;
-    
+
     [Parameter]
-    public int CurrentCount
-    {
-        get => _currentCount;
-        set
-        {
-            if (_currentCount != value)
-            {
-                _currentCount = value;
-                _localStorage.SetProperty(nameof(CurrentCount), _currentCount);
-            }
-        }
-    }
+    public int CurrentCount { get; set; }
 
     [JSInvokable]
     public async Task UpdateCounter()
     {
         try
         {
-            _currentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
+            CurrentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
             StateHasChanged();
         }
         catch 
@@ -92,18 +81,39 @@
         }
     }
 
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        if (parameters.TryGetValue(nameof(CurrentCount), out int currentCount))
+        {
+            _currentCountToOverride = currentCount;
+        }
+        
+        return base.SetParametersAsync(parameters);
+    }
+    
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            Console.WriteLine("OnInitializedAsync");
             await _localStorage.Init();
-            _currentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
-            Console.WriteLine("OnInitializedAsync done");
+            if (_currentCountToOverride.HasValue)
+            {
+                await _localStorage.SetProperty(nameof(CurrentCount), CurrentCount);
+                CurrentCount = _currentCountToOverride.Value;
+            }
+            else
+            {
+                CurrentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
+            }
         }
         catch 
         {
         }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("OnParametersSetAsync: {0}", CurrentCount);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -117,20 +127,32 @@
                 // await _elementReference.Value.FocusAsync();
             }
 
-            Console.WriteLine("OnAfterRenderAsync");
             var objRef = DotNetObjectReference.Create(this);
             await _localStorage.Init();
             await _localStorage.Watch(objRef);
-            Console.WriteLine("OnAfterRenderAsync done");
         }
     }
 
-    private void IncrementCount(MouseEventArgs args)
+    private async Task IncrementCount(MouseEventArgs args)
     {
         CurrentCount += args.MetaKey ? -_increment : _increment;
-        Console.WriteLine("works");
+        await _localStorage.SetProperty(nameof(CurrentCount), CurrentCount);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private void KeyPressHandler(KeyboardEventArgs e)
     {
         if (e.Key == "+")
@@ -156,10 +178,10 @@
     private void AutoIncrement()
     {
         new Timer(
-            callback: (_) =>
+            callback: async (_) =>
             {
                 var args = new MouseEventArgs();
-                IncrementCount(args);
+                await IncrementCount(args);
                 StateHasChanged();
             },
             state: null,
