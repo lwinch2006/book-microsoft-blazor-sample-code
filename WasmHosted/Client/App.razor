@@ -1,7 +1,14 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@inject LazyAssemblyLoader _lazyAssemblyLoader
+
+<Router
+    AppAssembly="@typeof(App).Assembly"
+    AdditionalAssemblies="@_additionalAssemblies"
+    OnNavigateAsync="OnNavigate">
+
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -9,4 +16,24 @@
             <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>
     </NotFound>
+    <Navigating>
+        Loading additional components...
+    </Navigating>
 </Router>
+
+@code {
+
+    private readonly List<Assembly> _additionalAssemblies = new();
+
+    private async Task OnNavigate(NavigationContext context)
+    {
+        if (context.Path.Equals("AnimalSelector", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("fetchdata1", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("fetchdata2", StringComparison.OrdinalIgnoreCase))
+        {
+            var assemblies = await _lazyAssemblyLoader.LoadAssembliesAsync(new[] { "ComponentsLibrary.dll" });
+            _additionalAssemblies.AddRange(assemblies);
+        }
+    }
+
+}

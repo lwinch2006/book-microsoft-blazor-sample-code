@@ -1,32 +1,32 @@
 using System;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using AngleSharp.Dom;
 using Bunit;
+using ComponentsLibrary.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using WasmHosted.Client.Pages;
-using WasmHosted.Client.Services;
 using WasmHosted.Shared;
+using WasmHosted.Shared.Services;
 using Xunit;
 
-namespace WasmHosted.ClientTests.Pages;
+namespace ComponentLibraryTests.Pages;
 
 public class FetchData1Tests : TestContext
 {
+    private readonly Mock<IApiClientFactory> _apiClientFactory;
     private readonly Mock<IApiClient> _apiClient;
     
     public FetchData1Tests()
     {
+        _apiClientFactory = new Mock<IApiClientFactory>();
         _apiClient = new Mock<IApiClient>();
+        _apiClientFactory.Setup(t => t.Create()).Returns(() => _apiClient.Object);
     }
 
     [Fact]
     public void Test_InitialSetup_ShouldPass()
     {
         SetupApiClientToReturnNull();
-        Services.AddSingleton(_apiClient.Object);
+        Services.AddSingleton(_apiClientFactory.Object);
 
         var component = RenderComponent<FetchData1>();
         component.FindAll("p")[1].MarkupMatches("<p><em>Loading...</em></p>");
@@ -36,7 +36,7 @@ public class FetchData1Tests : TestContext
     public void Test_ReturnsWeatherForecatsFromApi_ShouldPass()
     {
         SetupApiClientToReturnNotEmpty();
-        Services.AddSingleton(_apiClient.Object);
+        Services.AddSingleton(_apiClientFactory.Object);
 
         var component = RenderComponent<FetchData1>();
         var count = component.FindAll("tbody > tr").Count;
@@ -47,6 +47,8 @@ public class FetchData1Tests : TestContext
     private void SetupApiClientToReturnNull()
     {
         _apiClient.Setup(t => t.GetWeatherForecast()).Returns(() => Task.FromResult((WeatherForecast[]?) null));
+        
+        
     }
 
     private void SetupApiClientToReturnNotEmpty()

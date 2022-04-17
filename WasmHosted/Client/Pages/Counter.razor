@@ -1,14 +1,20 @@
 ﻿@page "/counter"
+@page "/counter/{CurrentCount:int?}"
+@using WasmHosted.Client.Services
+
+@inject NavigationManager _navigationManager
+@inject ILocalStorage _localStorage
+@inject IFocusService _focusService
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @_currentCount</p>
+<p role="status">Current count: @CurrentCount</p>
 <div class="row g-3 mb-3">
     <div class="col-4">
         <label>Increment with bind</label>
-        <input type="number" class="form-control" @bind="@_increment" @bind:event="oninput" @onkeypress="KeyPressHandler" @onkeypress:preventDefault/>
+        <input @ref="_elementReference" type="number" class="form-control" @bind="@_increment" @bind:event="oninput" @onkeypress="KeyPressHandler" @onkeypress:preventDefault/>
     </div>
     <div class="col-8"></div>
     <div class="col-4">
@@ -33,6 +39,21 @@
     <input class="form-control" @bind="@_currentDate" @bind:format="dd.MM.yyyy" />
 </div>
 
+<div class="mb-3">
+    <p>
+        Navigation with plain anchor (a)
+    </p>
+    <a class="btn btn-link" href="/">Go to home</a>
+</div>
+
+<div>
+    <p>
+        Navigation with NavigationManager
+    </p>
+    <button type="button" class="btn btn-success" @onclick="StartCountWith50">Start with count 50</button>
+</div>
+
+
 
 @code {
     private int _currentCount = 0;
@@ -42,12 +63,71 @@
     private string _outerMousePosition = "no set yet";
     private string _innerMousePosition = "no set yet";
 
+    private ElementReference? _elementReference;
+    
+    [Parameter]
+    public int CurrentCount
+    {
+        get => _currentCount;
+        set
+        {
+            if (_currentCount != value)
+            {
+                _currentCount = value;
+                _localStorage.SetProperty(nameof(CurrentCount), _currentCount);
+            }
+        }
+    }
 
-    
-    
+    [JSInvokable]
+    public async Task UpdateCounter()
+    {
+        try
+        {
+            _currentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
+            StateHasChanged();
+        }
+        catch 
+        {
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Console.WriteLine("OnInitializedAsync");
+            await _localStorage.Init();
+            _currentCount = await _localStorage.GetProperty<int>(nameof(CurrentCount));
+            Console.WriteLine("OnInitializedAsync done");
+        }
+        catch 
+        {
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (_elementReference is not null)
+            {
+                await _focusService.Focus(_elementReference.Value);
+                // OR build-in extension method
+                // await _elementReference.Value.FocusAsync();
+            }
+
+            Console.WriteLine("OnAfterRenderAsync");
+            var objRef = DotNetObjectReference.Create(this);
+            await _localStorage.Init();
+            await _localStorage.Watch(objRef);
+            Console.WriteLine("OnAfterRenderAsync done");
+        }
+    }
+
     private void IncrementCount(MouseEventArgs args)
     {
-        _currentCount += args.MetaKey ? -_increment : _increment;
+        CurrentCount += args.MetaKey ? -_increment : _increment;
         Console.WriteLine("works");
     }
 
@@ -86,5 +166,10 @@
             dueTime: TimeSpan.FromSeconds(1),
             period: TimeSpan.FromSeconds(1));
         
+    }
+
+    private void StartCountWith50()
+    {
+        _navigationManager.NavigateTo("/counter/50");
     }
 }

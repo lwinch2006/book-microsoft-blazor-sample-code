@@ -18,7 +18,7 @@ public class MenuController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<MenuVm>> Get()
     {
-        await Task.Delay(1000);
+        //await Task.Delay(1000);
         
         var menu = await _menuService.Get();
         var menuVm = MenuMapper.Map(menu);

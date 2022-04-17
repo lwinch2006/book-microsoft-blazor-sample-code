@@ -1,0 +1,30 @@
+@page "/PizzaRestaurant2/details"
+<h3>PizzaDetails</h3>
+
+@inject StateVm _state
+
+<fieldset>
+    <div class="row mb-3">
+        <label for="Name" class="col-2">Name</label>
+        <div class="col-6">
+            <input id="Name" class="form-control" value="@_state.CurrentPizza!.Name" readonly/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="Price" class="col-2">Price</label>
+        <div class="col-6">
+            <input id="Price" class="form-control" value="@_state.CurrentPizza!.Price.ToString("0.00")" readonly/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="Spiciness" class="col-2">Spiciness</label>
+        <div class="col-6">
+            <img src="images/@(_state.CurrentPizza.Spiciness.ToString().ToLower()).jpg" alt="@_state.CurrentPizza.Spiciness" style="max-height: 32px;"/>
+        </div>
+    </div>
+    <a href="/PizzaRestaurant2" class="btn btn-success">Back to menu</a>
+</fieldset>
+
+@code {
+
+}

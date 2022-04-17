@@ -1,4 +1,4 @@
-namespace WasmHosted.Client.Models;
+namespace ComponentsLibrary.Models;
 
 public class ComponentMetadata
 {

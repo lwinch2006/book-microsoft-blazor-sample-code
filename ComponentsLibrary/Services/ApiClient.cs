@@ -1,12 +1,8 @@
 using System.Net.Http.Json;
 using WasmHosted.Shared;
+using WasmHosted.Shared.Services;
 
-namespace WasmHosted.Client.Services;
-
-public interface IApiClient
-{
-    Task<WeatherForecast[]?> GetWeatherForecast();
-}
+namespace ComponentsLibrary.Services;
 
 public class ApiClient : IApiClient
 {

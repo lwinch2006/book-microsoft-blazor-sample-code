@@ -19,4 +19,14 @@
       <Folder Include="wwwroot" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Animals\AnimalSelectorComponent.razor" />
+      <AdditionalFiles Include="Animals\CatComponent.razor" />
+      <AdditionalFiles Include="Animals\DogComponent.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WasmHosted\Shared\WasmHosted.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

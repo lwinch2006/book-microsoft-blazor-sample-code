@@ -1,8 +1,9 @@
-using WasmHosted.Client.Components.Animals;
-using WasmHosted.Client.Models;
+using ComponentsLibrary.Animals;
+using ComponentsLibrary.Models;
 using WasmHosted.Shared.Models;
 using WasmHosted.Shared.ViewModels;
 using WasmHosted.Shared.ViewModels.Animals;
+using DogComponent = ComponentsLibrary.Animals.DogComponent;
 
 namespace WasmHosted.Client.Extensions;
 

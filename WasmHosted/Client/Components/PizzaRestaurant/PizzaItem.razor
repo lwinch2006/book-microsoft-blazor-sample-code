@@ -1,6 +1,15 @@
 <div class="row mb-3 align-items-center">
     <div class="col">
-        @Pizza.Name
+        @if (ShowPizzaInformation != null)
+        {
+            <a href="" class="btn btn-link" @onclick="@(() => ShowPizzaInformation.Invoke(Pizza!))">
+                @Pizza.Name
+            </a>
+        }
+        else
+        {
+            @Pizza.Name
+        }
     </div>
     <div class="col text-right">
         @(Pizza.Price.ToString("0.00"))

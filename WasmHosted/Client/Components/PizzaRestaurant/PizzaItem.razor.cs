@@ -18,6 +18,9 @@ public partial class PizzaItem
     
     [Parameter]
     public EventCallback<PizzaVm> Selected { get; set; }
+    
+    [Parameter]
+    public Action<PizzaVm>? ShowPizzaInformation { get; set; }
 
     private string GetSpicinessImageUrl(SpicinessTypes spicinessTypes)
     {

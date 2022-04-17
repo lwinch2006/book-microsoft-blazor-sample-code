@@ -7,6 +7,7 @@ public class StateVm
     public UIVm UiVm { get; } = new();
     public ShoppingBasketVm BasketVm { get; } = new();
     public MenuVm MenuVm { get; set; } = new();
+    public PizzaVm? CurrentPizza { get; set; }
     public decimal TotalPrice
     {
         get

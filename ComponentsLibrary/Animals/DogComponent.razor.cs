@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using WasmHosted.Shared.ViewModels;
 using WasmHosted.Shared.ViewModels.Animals;
 
-namespace WasmHosted.Client.Components.Animals;
+namespace ComponentsLibrary.Animals;
 
 public partial class DogComponent
 {

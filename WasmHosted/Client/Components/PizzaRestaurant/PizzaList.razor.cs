@@ -19,4 +19,7 @@ public partial class PizzaList
     
     [Parameter]
     public EventCallback<PizzaVm> Selected { get; set; }
+    
+    [Parameter]
+    public Action<PizzaVm>? ShowPizzaInformation { get; set; }
 }

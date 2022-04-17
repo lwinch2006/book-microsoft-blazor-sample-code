@@ -1,10 +1,8 @@
 ﻿@page "/fetchdata1"
-@layout MainLayoutRight
-
 
 @using WasmHosted.Shared
-@using WasmHosted.Client.Services
-@inject IApiClient _apiClient
+@using WasmHosted.Shared.Services
+@inject IApiClientFactory _apiClientFactory
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -46,6 +44,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await _apiClient.GetWeatherForecast();
+        var apiClient = _apiClientFactory.Create();
+        _forecasts = await apiClient.GetWeatherForecast();
     }
 }

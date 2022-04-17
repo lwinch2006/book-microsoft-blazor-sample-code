@@ -20,5 +20,15 @@
   <ItemGroup>
     <Folder Include="wwwroot\images" />
   </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Animals\AnimalSelectorComponent.razor" />
+    <_ContentIncludedByDefault Remove="Components\Animals\CatComponent.razor" />
+    <_ContentIncludedByDefault Remove="Components\Animals\DogComponent.razor" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <BlazorWebAssemblyLazyLoad Include="ComponentsLibrary.dll" />
+  </ItemGroup>
   
 </Project>

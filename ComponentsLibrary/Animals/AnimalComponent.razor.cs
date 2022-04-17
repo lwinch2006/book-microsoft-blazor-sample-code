@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace WasmHosted.Client.Components.Animals;
+namespace ComponentsLibrary.Animals;
 
 public partial class AnimalComponent : ComponentBase
 {

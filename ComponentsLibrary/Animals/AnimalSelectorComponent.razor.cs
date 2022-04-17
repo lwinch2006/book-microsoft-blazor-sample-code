@@ -1,8 +1,8 @@
+using ComponentsLibrary.Models;
 using WasmHosted.Client.Extensions;
-using WasmHosted.Client.Models;
 using WasmHosted.Shared.Models;
 
-namespace WasmHosted.Client.Components.Animals;
+namespace ComponentsLibrary.Animals;
 
 public partial class AnimalSelectorComponent
 {
