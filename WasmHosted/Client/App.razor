@@ -29,6 +29,7 @@
     {
         if (context.Path.Equals("AnimalSelector", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("fetchdata1", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("PizzaRestaurant2", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("fetchdata2", StringComparison.OrdinalIgnoreCase))
         {
             var assemblies = await _lazyAssemblyLoader.LoadAssembliesAsync(new[] { "ComponentsLibrary.dll" });

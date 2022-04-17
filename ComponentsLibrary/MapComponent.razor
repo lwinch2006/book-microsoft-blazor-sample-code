@@ -1,0 +1,34 @@
+@using ComponentsLibrary.Models
+@inject IJSRuntime _jsRuntime
+
+<div class="@CssClass">
+    <div id="@_mapId" style="width: 100%; height: 100%;"></div>
+</div>
+
+@code {
+    private readonly string _mapId = $"map-{Guid.NewGuid():D}";
+    private IJSObjectReference? _mapJsModule;
+
+    [Parameter]
+    public double Zoom { get; set; }
+
+    [Parameter]
+    public IEnumerable<MapMarker> Markers { get; set; } = Enumerable.Empty<MapMarker>();
+
+    [Parameter]
+    public string? CssClass { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _mapJsModule ??= await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/ComponentsLibrary/scripts/map.js");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_mapJsModule is not null)
+        {
+            await _mapJsModule.InvokeVoidAsync("showOrUpdate", _mapId, Zoom, Markers.ToList());
+        }
+    }
+
+}

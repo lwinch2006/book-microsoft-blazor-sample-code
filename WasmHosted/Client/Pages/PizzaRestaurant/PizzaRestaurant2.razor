@@ -1,5 +1,6 @@
 @page "/pizzarestaurant2"
 @using System.Net
+@using ComponentsLibrary.Models
 @using WasmHosted.Shared.ViewModels.PizzaRestaurant
 
 @inject HttpClient _httpClient
@@ -32,6 +33,8 @@ else
         Title="Please enter your details below"
         @bind-Customer="@_state.BasketVm.Customer"
         ValidSubmit="Checkout" />
+    
+    <MapComponent Zoom="17" CssClass="mapComponent" Markers="@_markers" />
 }
 
 @if (DebuggerExtensions.IsDebug())
@@ -42,6 +45,24 @@ else
 
 @code {
     //private readonly StateVm _state = new();
+
+    private readonly IEnumerable<MapMarker> _markers = new[]
+    {
+        new MapMarker
+        {
+            Description = "Pizza restaurant", 
+            X = 4.29660, 
+            Y = 50.88022, 
+            ShowPopup = false
+        }, 
+        new MapMarker
+        { 
+            Description = "You", 
+            X = 4.27638, 
+            Y = 50.87136, 
+            ShowPopup = true 
+        }
+    };
 
     protected override async Task OnInitializedAsync()
     {
