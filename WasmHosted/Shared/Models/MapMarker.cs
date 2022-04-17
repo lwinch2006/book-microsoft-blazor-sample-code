@@ -1,4 +1,4 @@
-namespace ComponentsLibrary.Models;
+namespace WasmHosted.Shared.Models;
 
 public class MapMarker
 {
