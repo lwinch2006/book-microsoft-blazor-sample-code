@@ -1,8 +1,10 @@
+using Fluxor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using WasmHosted.Client;
 using WasmHosted.Client.Services;
+using WasmHosted.Shared.Redux.Stores;
 using WasmHosted.Shared.Services;
 using WasmHosted.Shared.ViewModels.PizzaRestaurant;
 
@@ -22,6 +24,9 @@ builder.Services.AddScoped<ILocalStorage, LocalStorageWithModule>();
 builder.Services.AddScoped<IFocusService, FocusService>();
 builder.Services.AddScoped<LazyAssemblyLoader>();
 builder.Services.AddSingleton<StateVm>();
-
+builder.Services.AddFluxor(options =>
+{
+	options.ScanAssemblies(typeof(AppStore).Assembly);
+});
 
 await builder.Build().RunAsync();

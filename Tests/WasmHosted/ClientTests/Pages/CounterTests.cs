@@ -1,5 +1,6 @@
 using Bunit;
 using WasmHosted.Client.Pages;
+using WasmHosted.Client.Pages.Counter;
 using Xunit;
 
 namespace WasmHosted.ClientTests.Pages;

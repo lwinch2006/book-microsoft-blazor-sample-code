@@ -1,0 +1,8 @@
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@page "/CounterWithFluxor"
+
+<h1>CounterWithFluxor</h1>
+
+<p role="status">Current count: @AppStore.Counter</p>
+
+<button type="button" class="btn btn-success" @onclick="IncrementCounter">Increment</button>

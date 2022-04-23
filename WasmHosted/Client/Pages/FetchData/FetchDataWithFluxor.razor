@@ -1,0 +1,34 @@
+@using ComponentsLibrary
+@using WasmHosted.Shared
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@page "/FetchDataWithFluxor"
+
+<h1>FetchDataWithFluxor</h1>
+
+@if (AppStore.IsLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <TableComponent Items="@AppStore.Forecasts" TItem="WeatherForecast">
+        <Header>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </Header>
+        <Row Context="forecast">
+            <td>@forecast.Date</td>
+            <td>@forecast.TemperatureC</td>
+            <td>@forecast.TemperatureF</td>
+            <td>@forecast.Summary</td>
+        </Row>
+        <Footer>
+            <td>Spring is in the air</td>
+        </Footer>
+    </TableComponent>
+}
+
+
+

@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Services
 @inject LazyAssemblyLoader _lazyAssemblyLoader
 
+<Fluxor.Blazor.Web.StoreInitializer />
+
 <Router
     AppAssembly="@typeof(App).Assembly"
     AdditionalAssemblies="@_additionalAssemblies"
@@ -30,7 +32,8 @@
         if (context.Path.Equals("AnimalSelector", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("fetchdata1", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("PizzaRestaurant2", StringComparison.OrdinalIgnoreCase)
-            || context.Path.Equals("fetchdata2", StringComparison.OrdinalIgnoreCase))
+            || context.Path.Equals("fetchdata2", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("FetchDataWithFluxor", StringComparison.OrdinalIgnoreCase))
         {
             var assemblies = await _lazyAssemblyLoader.LoadAssembliesAsync(new[] { "ComponentsLibrary.dll" });
             _additionalAssemblies.AddRange(assemblies);
