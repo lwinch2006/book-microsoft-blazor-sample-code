@@ -1,10 +1,12 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using WasmHosted.Server.Extensions;
+using WasmHosted.Server.Extensions.Whiteboard;
+using WasmHosted.Server.Services.Whiteboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddApplicationServices();
+builder.Services
+    .AddApplicationServices()
+    .AddWhiteboardServices();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -23,16 +25,16 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
-
-app.UseRouting();
-
+app
+    .UseHttpsRedirection()
+    .UseBlazorFrameworkFiles()
+    .UseStaticFiles()
+    .UseRouting()
+    .UseResponseCompression();
 
 app.MapRazorPages();
 app.MapControllers();
+app.MapHub<WhiteboardHub>("/whiteboard");
 app.MapFallbackToFile("index.html");
 
 app.Run();
