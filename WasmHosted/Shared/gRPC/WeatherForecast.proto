@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "WasmHosted.Shared.gRPC";
+
+message getWeatherForecastRequest {}
+
+message weatherForecast {
+    google.protobuf.Timestamp date = 1;
+    int32 temperatureC = 2;
+    string summary = 3;
+}
+
+message getWeatherForecastResponse {
+    repeated weatherForecast forecasts = 1;
+}
+
+service protoWeatherForecast {
+    rpc getWeatherForecasts(getWeatherForecastRequest) returns (getWeatherForecastResponse);
+}
+
+
+
+
+
+
+
+

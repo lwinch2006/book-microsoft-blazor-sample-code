@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using WasmHosted.Client;
+using WasmHosted.Client.Extensions.FetchData;
 using WasmHosted.Client.Services;
 using WasmHosted.Shared.Redux.Stores;
 using WasmHosted.Shared.Services;
@@ -19,14 +20,16 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 //     client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
 // });
 
-builder.Services.AddScoped<IApiClientFactory, ApiClientFactory>();
-builder.Services.AddScoped<ILocalStorage, LocalStorageWithModule>();
-builder.Services.AddScoped<IFocusService, FocusService>();
-builder.Services.AddScoped<LazyAssemblyLoader>();
-builder.Services.AddSingleton<StateVm>();
-builder.Services.AddFluxor(options =>
-{
-	options.ScanAssemblies(typeof(AppStore).Assembly);
-});
+builder.Services
+	.AddFetchDataWithgRPCServices()
+	.AddScoped<IApiClientFactory, ApiClientFactory>()
+	.AddScoped<ILocalStorage, LocalStorageWithModule>()
+	.AddScoped<IFocusService, FocusService>()
+	.AddScoped<LazyAssemblyLoader>()
+	.AddSingleton<StateVm>()
+	.AddFluxor(options =>
+	{
+		options.ScanAssemblies(typeof(AppStore).Assembly);
+	});
 
 await builder.Build().RunAsync();

@@ -1,28 +1,33 @@
 using WasmHosted.Server.Extensions;
+using WasmHosted.Server.Extensions.FetchData;
 using WasmHosted.Server.Extensions.Whiteboard;
+using WasmHosted.Server.Services.FetchData;
 using WasmHosted.Server.Services.Whiteboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplicationServices()
-    .AddWhiteboardServices();
+    .AddWhiteboardServices()
+    .AddFetchDataWithgRPCServices();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseWebAssemblyDebugging();
+    app
+        .UseDeveloperExceptionPage()
+        .UseWebAssemblyDebugging();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app
+        .UseExceptionHandler("/Error")
+        .UseHsts();
 }
 
 app
@@ -30,11 +35,13 @@ app
     .UseBlazorFrameworkFiles()
     .UseStaticFiles()
     .UseRouting()
-    .UseResponseCompression();
+    .UseResponseCompression()
+    .UseGrpcWeb();
 
 app.MapRazorPages();
 app.MapControllers();
 app.MapHub<WhiteboardHub>("/whiteboard");
+app.MapGrpcService<FetchDataWithgRPCServerService>().EnableGrpcWeb();
 app.MapFallbackToFile("index.html");
 
 app.Run();

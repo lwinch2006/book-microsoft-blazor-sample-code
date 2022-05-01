@@ -30,10 +30,12 @@
     private async Task OnNavigate(NavigationContext context)
     {
         if (context.Path.Equals("AnimalSelector", StringComparison.OrdinalIgnoreCase)
-            || context.Path.Equals("fetchdata1", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("PizzaRestaurant2", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("fetchdata1", StringComparison.OrdinalIgnoreCase)
             || context.Path.Equals("fetchdata2", StringComparison.OrdinalIgnoreCase)
-            || context.Path.Equals("FetchDataWithFluxor", StringComparison.OrdinalIgnoreCase))
+            || context.Path.Equals("FetchDataWithFluxor", StringComparison.OrdinalIgnoreCase)
+            || context.Path.Equals("FetchDataWithgRPC", StringComparison.OrdinalIgnoreCase)
+            )
         {
             var assemblies = await _lazyAssemblyLoader.LoadAssembliesAsync(new[] { "ComponentsLibrary.dll" });
             _additionalAssemblies.AddRange(assemblies);

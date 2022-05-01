@@ -1,0 +1,46 @@
+@page "/FetchDataWithgRPC"
+@using ComponentsLibrary
+@using WasmHosted.Client.Services.FetchData
+@using WasmHosted.Shared
+@inject HttpClient HttpClient
+@inject IFetchDataWithgRPCClientService GrpcClient
+
+<PageTitle>FetchData With gRPC</PageTitle>
+<h1>FetchData With gRPC</h1>
+
+@if (!_forecasts.Any())
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <TableComponent Items="@_forecasts" TItem="WeatherForecast">
+        <Header>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </Header>
+        <Row Context="forecast">
+            <td>@forecast.Date</td>
+            <td>@forecast.TemperatureC</td>
+            <td>@forecast.TemperatureF</td>
+            <td>@forecast.Summary</td>
+        </Row>
+        <Footer>
+            <td>Spring is in the air</td>
+        </Footer>
+    </TableComponent>
+}
+
+@code {
+    private WeatherForecast[] _forecasts = Array.Empty<WeatherForecast>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //_forecasts = await HttpClient.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast") ?? Array.Empty<WeatherForecast>();
+        _forecasts = (await GrpcClient.GetWeatherForecasts()).ToArray();
+    }
+}
