@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Pages\Index.no.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.no.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Shared\SurveyPrompt.no.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SurveyPrompt.no.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Pages\Index.nb.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.nb.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Pages\Index.no.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.NO.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Shared\SurveyPrompt.no.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SurveyPrompt.NO.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Pages\Index.nb.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.nb.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Pages\Index.no.Designer.cs">
+        <DependentUpon>Index.no.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Shared\SurveyPrompt.no.Designer.cs">
+        <DependentUpon>SurveyPrompt.no.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

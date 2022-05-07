@@ -1,0 +1,14 @@
+﻿@page "/"
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Index> T
+
+<PageTitle>Index</PageTitle>
+
+<h1>@T["Hello, world!"]</h1>
+
+<h2>@T["Current culture"] @CultureInfo.CurrentCulture.DisplayName</h2>
+
+@T["Welcome to your new app."] 
+
+<SurveyPrompt Title="@T["How is Blazor working for you?"]"/>

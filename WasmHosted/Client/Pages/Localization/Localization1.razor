@@ -1,0 +1,36 @@
+@page "/Localization1"
+@using System.Globalization
+@inject HttpClient HttpClient
+
+<h3>Localization</h3>
+
+@if (_mondayNorwegian == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>Monday (norwegian): @_mondayNorwegian</p>
+    <p>Monday (swedish): @_mondaySwedish</p>
+    <p>Current date (russian): @_currentDateTimeRu</p>
+}
+
+@code {
+    private string? _mondayNorwegian;
+    private string? _mondaySwedish;
+    private string? _currentDateTimeRu;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var mondays = (await HttpClient.GetFromJsonAsync<string[]>("Localization/GetMondays")) ?? new[] { "Err", "Err" };
+        
+        _mondayNorwegian = mondays[0];
+        _mondaySwedish = mondays[1];
+
+        var originalCulture = CultureInfo.CurrentCulture;
+        CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
+        _currentDateTimeRu = $"{DateTime.Now:D}";
+
+        CultureInfo.CurrentCulture = originalCulture;
+    }
+}
