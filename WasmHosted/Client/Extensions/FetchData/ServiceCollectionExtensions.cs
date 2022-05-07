@@ -15,7 +15,11 @@ public static class ServiceCollectionExtensions
 				var configuration = sp.GetRequiredService<IConfiguration>();
 				var serverUrl = configuration["FetchDataWithgRPC:Server"];
 				var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
-				return GrpcChannel.ForAddress(serverUrl, new GrpcChannelOptions { HttpHandler = httpHandler });
+				return GrpcChannel.ForAddress(serverUrl, new GrpcChannelOptions
+				{
+					HttpHandler = httpHandler,
+					MaxReceiveMessageSize = null
+				});
 			});
 
 

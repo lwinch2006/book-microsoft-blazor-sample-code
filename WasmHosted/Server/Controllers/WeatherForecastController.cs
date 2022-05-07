@@ -22,7 +22,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<WeatherForecast> Get()
     {
-        foreach (var i in Enumerable.Range(1, 5))
+        foreach (var i in Enumerable.Range(1, 100))
         {
             yield return new WeatherForecast()
             {

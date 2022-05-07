@@ -10,7 +10,7 @@ public class FetchDataWithgRPCServerService : protoWeatherForecast.protoWeatherF
 {
 	public override Task<getWeatherForecastResponse> getWeatherForecasts(getWeatherForecastRequest request, ServerCallContext serverCallContext)
 	{
-		var forecasts = Enumerable.Range(1, 5).Select(index => new weatherForecast
+		var forecasts = Enumerable.Range(1, 100).Select(index => new weatherForecast
 		{
 			Date = Timestamp.FromDateTime(DateTime.UtcNow.AddDays(index)),
 			TemperatureC = Random.Shared.Next(-20, 55),
