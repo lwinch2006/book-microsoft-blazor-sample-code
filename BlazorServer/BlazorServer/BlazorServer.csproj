@@ -19,6 +19,14 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Index.nb.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Shared\MainLayout.no.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MainLayout.no.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Components\LanguagePicker.no.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>LanguagePicker.no.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +50,16 @@
       </Compile>
       <Compile Update="Shared\SurveyPrompt.no.Designer.cs">
         <DependentUpon>SurveyPrompt.no.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Shared\MainLayout.no.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MainLayout.no.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Components\LanguagePicker.no.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>LanguagePicker.no.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

@@ -17,6 +17,7 @@ public static class LocalizationExtensions
 		localizationOptions.RequestCultureProviders.Clear();
 		localizationOptions.RequestCultureProviders.Add(new QueryStringRequestCultureProvider());
 		localizationOptions.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider());
+		localizationOptions.RequestCultureProviders.Add(new CookieRequestCultureProvider());
 
 		return localizationOptions;
 	}

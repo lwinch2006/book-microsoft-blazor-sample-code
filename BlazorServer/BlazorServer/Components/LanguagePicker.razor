@@ -1,0 +1,17 @@
+@if (Cultures != null)
+{
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <select class="form-select mr-2" style="max-width: 500px;" @bind="SelectedCulture">
+                <option>@T["Select..."]</option>
+                @foreach (var (cultureIso, cultureDisplayName) in Cultures)
+                {
+                    <option value="@cultureIso">@cultureDisplayName</option>
+                }
+            </select>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-success" @onclick="RequestCultureChange">@T["Change"]</button>
+        </div>
+    </form>
+}
