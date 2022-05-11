@@ -1,7 +1,8 @@
+@inject IStringLocalizer<PizzaList> T
 
 @if (!Pizzas.Any())
 {
-    <div>Loading...</div>
+    <div>@T["Loading..."]</div>
 }
 else
 {

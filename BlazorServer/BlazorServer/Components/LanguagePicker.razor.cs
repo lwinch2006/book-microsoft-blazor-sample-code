@@ -9,8 +9,7 @@ public partial class LanguagePicker : ComponentBase
 {
 	private string SelectedCulture { get; set; } = CultureInfo.CurrentUICulture.Name;
 
-	[Parameter]
-	public Dictionary<string, string>? Cultures { get; set; }
+	private Dictionary<string, string>? Cultures { get; set; }
 
 	[Inject] 
 	private IStringLocalizer<LanguagePicker> T { get; set; } = default!;

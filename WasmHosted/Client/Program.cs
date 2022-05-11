@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using WasmHosted.Client;
 using WasmHosted.Client.Extensions.FetchData;
+using WasmHosted.Client.Extensions.PizzaRestaurant;
 using WasmHosted.Client.Services;
 using WasmHosted.Shared.Redux.Stores;
 using WasmHosted.Shared.Services;
@@ -30,6 +31,10 @@ builder.Services
 	.AddFluxor(options =>
 	{
 		options.ScanAssemblies(typeof(AppStore).Assembly);
-	});
+	})
+	.AddLocalization();
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+
+await host.SetDefaultCulture();
+await host.RunAsync();

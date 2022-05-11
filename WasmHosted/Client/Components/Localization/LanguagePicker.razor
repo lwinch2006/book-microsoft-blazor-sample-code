@@ -1,0 +1,13 @@
+@if (Cultures != null)
+{
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <select class="form-select mr-2" style="max-width: 500px;" @bind="SelectedCulture">
+                @foreach (var (cultureIso, cultureDisplayName) in Cultures)
+                {
+                    <option value="@cultureIso">@cultureDisplayName</option>
+                }
+            </select>
+        </div>
+    </form>
+}

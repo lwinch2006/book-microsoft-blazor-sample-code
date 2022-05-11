@@ -1,3 +1,5 @@
+@inject IStringLocalizer<CustomerEntry> T
+
 <h4>@Title</h4>
 
 <EditForm Model="@Customer" OnValidSubmit="@ValidSubmit">
@@ -9,26 +11,26 @@
     
     <fieldset>
         <div class="row mb-3">
-            <label for="Name" class="col-2">Name</label>
+            <label for="Name" class="col-2">@T["Name"]</label>
             <div class="col-6">
                 <InputText id="Name" class="form-control" @bind-Value="@Customer.Name"></InputText>
                 <ValidationMessage For="@(() => Customer!.Name)"/>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="Street" class="col-2">Street</label>
+            <label for="Street" class="col-2">@T["Street"]</label>
             <div class="col-6">
                 <InputText id="Street" class="form-control" @bind-Value="@Customer.Street"></InputText>
                 <ValidationMessage For="@(() => Customer!.Street)"/>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="City" class="col-2">City</label>
+            <label for="City" class="col-2">@T["City"]</label>
             <div class="col-6">
                 <InputText id="City" class="form-control" @bind-Value="@Customer.City"></InputText>
                 <ValidationMessage For="@(() => Customer!.City)"/>
             </div>
         </div>
-        <button class="btn btn-success mb-3" disabled="@(!_inputWatcher?.Validate() ?? true)">Checkout</button>
+        <button class="btn btn-success mb-3" disabled="@(!_inputWatcher?.Validate() ?? true)">@T["Checkout"]</button>
     </fieldset>
 </EditForm>

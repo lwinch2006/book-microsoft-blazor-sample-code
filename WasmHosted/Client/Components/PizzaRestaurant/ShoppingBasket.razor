@@ -1,11 +1,14 @@
+@inject IStringLocalizer<ShoppingBasket> T
+@inject IStringLocalizer<Resources.Common> TC
+
 @if (OrderedPizzas.Any())
 {
     <HeaderBodyFooterComponent>
         <Body>
         <PizzaList
-            Title="Your current order"
+            Title="@T["Your current order"]"
             Pizzas="@OrderedPizzas"
-            ButtonTitle="Remove"
+            ButtonTitle="@TC["Remove"]"
             ButtonClass="btn btn-danger"
             Selected="@Selected"/>
         </Body>
@@ -22,7 +25,7 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col">
-                    Total:
+                    @T["Total:"]
                 </div>
                 <div class="col text-right font-weight-bold">
                     @_totalPrice.ToString("0.00");

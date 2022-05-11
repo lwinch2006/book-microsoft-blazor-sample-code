@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorWebAssemblyLoadAllGlobalizationData>True</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.3" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,57 @@
     <Content Update="wwwroot\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Components\PizzaRestaurant\PizzaList.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PizzaList.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Components\PizzaRestaurant\ShoppingBasket.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShoppingBasket.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Components\PizzaRestaurant\CustomerEntry.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerEntry.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\PizzaRestaurant\PizzaRestaurant2.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PizzaRestaurant2.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Common.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Components\PizzaRestaurant\PizzaList.no.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PizzaList.no.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PizzaRestaurant\ShoppingBasket.no.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShoppingBasket.no.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PizzaRestaurant\CustomerEntry.no.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CustomerEntry.no.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\PizzaRestaurant\PizzaRestaurant2.no.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PizzaRestaurant2.no.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Common.no.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Common.no.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   
 </Project>
