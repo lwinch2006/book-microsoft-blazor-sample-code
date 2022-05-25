@@ -1,14 +1,20 @@
-﻿@page "/"
-@using System.Globalization
+﻿@using System.Globalization
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Index> T
 
+@page "/"
+
 <PageTitle>Index</PageTitle>
 
-<h1>@T["Hello, world!"]</h1>
+<h1>@T["Hello"], @Username</h1>
 
 <h2>@T["Current culture"] @CultureInfo.CurrentCulture.DisplayName</h2>
 
 <p>@T["Welcome to your new app."]</p>
 
 <SurveyPrompt Title="@T["How is Blazor working for you?"]"/>
+
+@foreach (var claim in Claims)
+{
+    <p>@claim.Type - @claim.Value</p>
+}
