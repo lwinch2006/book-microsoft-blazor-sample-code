@@ -13,4 +13,10 @@ public static class HelperFunctionExtensions
 		action();
 		return (app as WebApplication)!;
 	}
+
+	public static IServiceCollection Add(this IServiceCollection services, Action action)
+	{
+		action();
+		return services;
+	}
 }
