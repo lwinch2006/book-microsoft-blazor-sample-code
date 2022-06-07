@@ -13,6 +13,14 @@ builder.Services
 	.AddApplicationServices()
 	.AddWhiteboardServices()
 	.AddFetchDataWithgRPCServices()
+	.AddCors(options =>
+	{
+		options.AddDefaultPolicy(policy =>
+		{
+			policy.WithHeaders("Authorization");
+			policy.WithOrigins("https://localhost:5001");
+		});
+	})
 	.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blazor Hosted App API", Version = "v1" }); });
 
 builder.Services.AddControllersWithViews();
@@ -41,6 +49,7 @@ app
 	.UseBlazorFrameworkFiles()
 	.UseStaticFiles()
 	.UseRouting()
+	.UseCors()
 	.UseAuthentication()
 	.UseAuthorization()
 	.UseResponseCompression()
